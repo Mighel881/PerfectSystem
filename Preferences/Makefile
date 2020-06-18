@@ -8,7 +8,6 @@ PerfectSystemPrefs_FILES = PSSAppearanceSettings.m PSSRootHeaderView.mm PSSRootL
 PerfectSystemPrefs_INSTALL_PATH = /Library/PreferenceBundles
 PerfectSystemPrefs_FRAMEWORKS = UIKit
 PerfectSystemPrefs_PRIVATE_FRAMEWORKS = Preferences
-PerfectSystemPrefs_LIBRARIES += sparkcolourpicker sparkapplist
 PerfectSystemPrefs_CFLAGS = -fobjc-arc -Wno-deprecated-declarations
 PerfectSystemPrefs_EXTRA_FRAMEWORKS = Cephei CepheiPrefs
 

@@ -1,6 +1,4 @@
-#include "PSSRootListController.h"
-#import "SparkAppListTableViewController.h"
-#import "SparkColourPickerView.h"
+#import "PSSRootListController.h"
 #import "spawn.h"
 
 @implementation PSSRootListController
@@ -58,24 +56,6 @@
 {
 	if (!_specifiers) _specifiers = [self loadSpecifiersFromPlistName: @"Root" target: self];
 	return _specifiers;
-}
-
-- (void)selectDoubleTapApp
-{
-    SparkAppListTableViewController *s = [[SparkAppListTableViewController alloc] initWithIdentifier: @"com.johnzaro.perfectsystemprefs.gestureApps" andKey: @"doubleTapApp"];
-    [s setMaxEnabled: 1];
-
-    [self.navigationController pushViewController: s animated: YES];
-    self.navigationItem.hidesBackButton = FALSE;
-}
-
-- (void)selectHoldApp
-{
-    SparkAppListTableViewController *s = [[SparkAppListTableViewController alloc] initWithIdentifier: @"com.johnzaro.perfectsystemprefs.gestureApps" andKey: @"holdApp"];
-    [s setMaxEnabled: 1];
-    
-    [self.navigationController pushViewController: s animated: YES];
-    self.navigationItem.hidesBackButton = FALSE;
 }
 
 - (void)reset: (PSSpecifier*)specifier

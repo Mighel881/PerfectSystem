@@ -8,6 +8,8 @@ static BOOL disableLargeTitles;
 static BOOL disableBreadcrumbs;
 static BOOL animatedTableCells;
 static BOOL disablePIPSizeRestrictions;
+static BOOL hideTabBarLabels;
+static BOOL showStatusBarOnLandscape;
 
 static BOOL hasMovedToWindow = NO;
 
@@ -144,6 +146,37 @@ static BOOL hasMovedToWindow = NO;
 
 %end
 
+%group hideTabBarLabelsGroup
+
+	%hook UITabBarButton
+
+	- (id)initWithImage: (id)arg1 landscapeImage: (id)arg2 selectedImage: (id)arg3 landscapeSelectedImage: (id)arg4 label: (id)arg5 withInsets: (UIEdgeInsets)arg6 landscapeInsets: (UIEdgeInsets)arg7 tabBar: (id)arg8
+	{
+		return %orig(arg1, arg2, arg3, arg4, nil, arg6, arg7, arg8);
+	}
+
+	- (id)initWithImage: (id)arg1 selectedImage: (id)arg2 label: (id)arg3 withInsets: (UIEdgeInsets)arg4 tabBar: (id)arg5
+	{
+		return %orig(arg1, arg2, nil, arg4, arg5);
+	}
+
+	%end
+
+%end
+
+%group showStatusBarOnLandscapeGroup
+
+	%hook UIStatusBarManager
+
+	- (BOOL)_updateVisibilityForWindow: (id)arg1 targetOrientation: (long long)arg2 animationParameters: (id*)arg3
+	{
+		return %orig(nil, arg2, arg3);
+	}
+
+	%end
+
+%end
+
 %ctor
 {
 	pref = [[HBPreferences alloc] initWithIdentifier: @"com.johnzaro.perfectsystemprefs"];
@@ -180,6 +213,8 @@ static BOOL hasMovedToWindow = NO;
 			[pref registerBool: &disableBreadcrumbs default: NO forKey: @"disableBreadcrumbs"];
 			[pref registerBool: &animatedTableCells default: NO forKey: @"animatedTableCells"];
 			[pref registerBool: &disablePIPSizeRestrictions default: NO forKey: @"disablePIPSizeRestrictions"];
+			[pref registerBool: &hideTabBarLabels default: NO forKey: @"hideTabBarLabels"];
+			[pref registerBool: &showStatusBarOnLandscape default: NO forKey: @"showStatusBarOnLandscape"];
 
 			if(isSpringboard)
 			{
@@ -204,6 +239,12 @@ static BOOL hasMovedToWindow = NO;
 
 			if(disableLargeTitles)
 				%init(disableLargeTitlesGroup);
+
+			if(hideTabBarLabels)
+				%init(hideTabBarLabelsGroup);
+
+			if(showStatusBarOnLandscape)
+				%init(showStatusBarOnLandscapeGroup);
 		}
 	}
 }
